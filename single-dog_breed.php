@@ -22,17 +22,6 @@ if( has_post_thumbnail() ){
 	$featuredimg = 'PATH-TO-DEFAULT-IMAGE';
 }
 
-// Get Dog Image field
-// if( get_field('dog_image') ){
-// 	$dog_image = get_field('dog_image');
-// }
-
-
-// Get the Characteristics field
-if( get_field('description') ){
-	$description = get_field('description');
-}
-
 // Get Dog Breed Group field
 if( get_field('dog_breed_group') ){
 	$dog_breed_group = get_field('dog_breed_group');
@@ -80,7 +69,7 @@ if( get_field('details_link') ){
 			
 				<div class="flex-item clearfix">
 					<h1 class="post-title"><?php echo get_the_title(); ?></h1>
-					<p><?php echo $description;?> </p>
+					<p><?php echo get_the_content();?> </p>
 				</div>
 			
 			

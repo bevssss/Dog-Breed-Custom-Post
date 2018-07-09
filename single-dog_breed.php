@@ -1,6 +1,33 @@
-<?php get_header(); ?>
+<?php
+/**
+ * The template for displaying all single posts
+ *
+ * @link https://developer.wordpress.org/themes/basics/template-hierarchy/#single-post
+ *
+ * @package WordPress
+ * @subpackage Twenty_Seventeen
+ * @since 1.0
+ * @version 1.0
+ */
+
+get_header(); ?>
+
 
 <?php 
+
+// Get The featured image
+if( has_post_thumbnail() ){
+	$featuredimg = get_the_post_thumbnail_url();
+} else {
+	$featuredimg = 'PATH-TO-DEFAULT-IMAGE';
+}
+
+// Get Dog Image field
+// if( get_field('dog_image') ){
+// 	$dog_image = get_field('dog_image');
+// }
+
+
 // Get the Characteristics field
 if( get_field('description') ){
 	$description = get_field('description');
@@ -33,20 +60,31 @@ if( get_field('details_link') ){
 
 ?>
 
-<div class="wrap">
-	<div id="primary" class="content-area description-area">
+
+
+	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
 
-			<?php while ( have_posts() ) : the_post();?>
-		<div class="breed-description">
-			<div class="container">
-				<div class="col column clearfix">
-					<h1 class="post-title"><?php echo get_the_title(); ?></h1>
-					<p><?php echo $description; ?></p>
+			<?php
+			/* Start the Loop */
+			while ( have_posts() ) : the_post();?>
+
+	
+		<div class="flex-container">
+			<div class="flex-item clearfix">
+				<div class="dog-image">
+						<img src="<?php echo get_the_post_thumbnail_url() ?>" />
 				</div>
 			</div>
-			<div class="container">
-				<div class="col column clearfix">
+
+			
+				<div class="flex-item clearfix">
+					<h1 class="post-title"><?php echo get_the_title(); ?></h1>
+					<p><?php echo $description;?> </p>
+				</div>
+			
+			
+				<div class="flex-item clearfix">
 					<h2>Vital Stats</h2>
 						<div class="vitalstats">
 							<p><strong>Dog Breed Group:</strong> <?php echo $dog_breed_group; ?></p>
@@ -56,13 +94,22 @@ if( get_field('details_link') ){
 							<p><a href="<?php echo $url ?>"><strong>Details Link</strong></a></p>
 						</div>
 				</div>
-			</div>
+			
 		</div>
-	<?php endwhile; ?>
+		
 
-</main>
-	</div>
-	<?php get_sidebar(); ?>
-</div>
+			<? the_post_navigation( array(
+					'prev_text' => '<span class="screen-reader-text">' . __( 'Previous Post', 'twentyseventeen' ) . '</span><span aria-hidden="true" class="nav-subtitle">' . __( 'Previous', 'twentyseventeen' ) . '</span> <span class="nav-title"><span class="nav-title-icon-wrapper">' . twentyseventeen_get_svg( array( 'icon' => 'arrow-left' ) ) . '</span>%title</span>',
+					'next_text' => '<span class="screen-reader-text">' . __( 'Next Post', 'twentyseventeen' ) . '</span><span aria-hidden="true" class="nav-subtitle">' . __( 'Next', 'twentyseventeen' ) . '</span> <span class="nav-title">%title<span class="nav-title-icon-wrapper">' . twentyseventeen_get_svg( array( 'icon' => 'arrow-right' ) ) . '</span></span>',
+				) );
 
-<?php get_footer(); ?>
+
+			endwhile; // End of the loop.
+			?>
+
+		</main><!-- #main -->
+	</div><!-- #primary -->
+	
+<!-- .wrap -->
+
+<?php get_footer();
